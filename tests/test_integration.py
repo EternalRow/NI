@@ -30,3 +30,11 @@ def test_if_tenants_have_valid_apartment_keys():
 
     manager.tenants['tenant-1'].apartment = 'invalid-key'
     assert manager.check_tenants_apartment_keys() == False
+
+def test_apartment_cost():
+    parameters = Parameters()
+    manager = Manager(parameters)
+    assert isinstance(manager.bills, list) #czy bills jest listą
+    assert manager.get_apartment_costs("apart-polanka", "2025", "02")==910.0 #poprawne obliczenie dla apart-polanka w 02.2025
+    assert manager.get_apartment_costs("nie_istnieje", "2025", "02")==None #nie ma apartamentu w bazie
+    assert manager.get_apartment_costs("apart-polanka", "2025", "01")==0.0 #apartament istnieje, brak rachunków w miesiącu
